@@ -11,7 +11,7 @@ import BlogBanner from "./components/blogBanner";
 import ViewPostPage from "./pages/viewBlogPostPage";
 // import Image from "./components/image";
 import WebsiteStyleEditor from "./components/styleEditor";
-import Navbar from "./components/navbar";
+import Navbar from "./components/navbar2";
 
 import CoachingPage from "./pages/coachingPage";
 import AdvertisingPage from "./pages/advertisingPage";
@@ -23,6 +23,7 @@ import Header from "./components/header";
 import DynamicPage from "./components/dynamicPage";
 import Mosaic from "./components/mosaic";
 import Blog from "./pages/blogPage";
+import TestPage from "./pages/testPage";
 
 function App() {
   const [userIsAdmin, setUserIsAdmin] = useState(false);
@@ -94,9 +95,6 @@ function App() {
         <WebsiteStyleEditor webStyle = {webStyle} updateWebStyle = {updateWebStyle} closeStyleEditor = {()=>{showWebsiteStyleEditor(false);}}/>
       }
 
-      
-
-
       <Router>
           <Switch>
           <Route path="/blog">
@@ -123,6 +121,7 @@ function App() {
               <CreatePostPage updateBlogCount = {updateBlogCount} webStyle = {webStyle}/>
           </Route>
           <Route path="/test">
+              {/* <TestPage/> */}
               <DynamicPage  webStyle = {webStyle} userIsAdmin = {userIsAdmin} viewAsNormalUser = {viewAsNormalUser}
                             defaultComponentList = { ["Header","Navbar","Mosaic","Header","Mosaic"]}  componentOptions = {["Navbar","Header","Mosaic"]}
                                updateWebStyle = {updateWebStyle} closeStyleEditor = {()=>{showWebsiteStyleEditor(false);}}/>

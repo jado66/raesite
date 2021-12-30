@@ -2,7 +2,7 @@ import Header from "./header";
 import Navbar from "./navbar";
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons'
+import { faSortUp, faSortDown, faThList } from '@fortawesome/free-solid-svg-icons'
 import Mosaic from "./mosaic";
 import WebsiteStyleEditor from "./styleEditor";
 import equal from 'fast-deep-equal'
@@ -13,6 +13,7 @@ export default class DynamicPage extends React.Component {
         super(props);
  
         // alert(JSON.stringify(props.webStyle))
+
 
         this.adminProps = {
             webStyle: props.webStyle,
@@ -48,15 +49,21 @@ export default class DynamicPage extends React.Component {
         this.componentOptions = props.componentOptions;
         this.pageType = props.pageType;
         this.inAdminMode = props.inAdminMode;
+
+        // this.generateKey = this.generateKey.bind(this)
+
+        
  
         this.state = {
             pageName: this.pageType,
-            componentNames: props.defaultComponentList,
+            componentNames: [],
+            componentIDs: [],
             isStyleEditorMinimized: false,
-            showStyleEditor: false
+            showStyleEditor: false,
+            pageID: "testPage"
         };
 
-        this.addComponentAtIndex=this.addComponentAtIndex.bind(this);
+        this.addComponentAtIndex = this.addComponentAtIndex.bind(this);
         this.minimizeStyleEditor = this.minimizeStyleEditor.bind(this);
     }
 
@@ -68,6 +75,29 @@ export default class DynamicPage extends React.Component {
     //         }
     //     }
     //   }
+    componentDidMount(){
+        const componentNames = localStorage.getItem(this.state.pageID+'-componentNames').split(',');
+        const componentIDs = localStorage.getItem(this.state.pageID+'-componentIDs').split(',')
+        
+        
+
+        if (componentNames && componentIDs){
+            // alert("Names: "+componentNames)
+            // alert("IDs: "+componentIDs)
+            this.setState({componentNames: componentNames,componentIDs:componentIDs})
+            this.forceUpdate()
+        }
+        else{
+            let componentNames = this.props.defaultComponentList
+            let componentIDs = [];
+
+            for (var i = 0; i < this.props.defaultComponentList.length; i++){
+                componentIDs.push(this.generateKey(this.props.defaultComponentList[i],i))
+            }
+            this.setState({componentNames: componentNames,componentIDs:componentIDs})
+
+        }
+      }
  
     minimizeStyleEditor(){
         this.setState({showStyleEditor:false})
@@ -80,14 +110,27 @@ export default class DynamicPage extends React.Component {
     addComponentAtIndex(index,componentName){ // Need to be replaced with list of objects or they will get rerendered
         // alert(`Add component ${componentName} at index ${index}`)
         // alert(this.state.componentNames)
-        let newState = [...this.state.componentNames.slice(0,index),componentName,...this.state.componentNames.slice(index)]
-        alert(`Inserting to index ${index} we get our newState ${newState}`)
-        this.setState({componentNames:newState});
+        let newID = this.generateKey(componentName,index)
+        let newComponentNames = [...this.state.componentNames.slice(0,index),componentName,...this.state.componentNames.slice(index)]
+        let newComponentIDs = [...this.state.componentIDs.slice(0,index),newID,...this.state.componentIDs.slice(index)]
+        // alert(`Inserting to index ${index} we get our newState ${newState}`)
+        this.setState({componentNames:newComponentNames,componentIDs:newComponentIDs});
+
+        localStorage.setItem(this.state.pageID+'-componentNames',newComponentNames);
+        localStorage.setItem(this.state.pageID+'-componentIDs',newComponentIDs)
     }
  
     deleteComponent(index){
         alert(`Delete component at index ${JSON.stringify(index)}`)
-        this.setState({componentNames: [...this.state.componentNames.slice(0,index),...this.state.componentNames.slice(index+1)]});
+
+        let newComponentNames = [...this.state.componentNames.slice(0,index),...this.state.componentNames.slice(index+1)]
+        let newComponentIDs = [...this.state.componentIDs.slice(0,index),...this.state.componentIDs.slice(index+1)]
+
+        this.setState({componentNames: newComponentNames,
+                       componentIDs: newComponentIDs});
+
+        localStorage.setItem(this.state.pageID+'-componentNames',newComponentNames);
+        localStorage.setItem(this.state.pageID+'-componentIDs',newComponentIDs)
     }
  
     moveComponentUp(index){
@@ -110,13 +153,25 @@ export default class DynamicPage extends React.Component {
  
     swapComponents(indexA,indexB){
         let newComponentNames = this.state.componentNames.slice();
-        let temp = this.state.componentNames[indexB];
+        let tempComponent = this.state.componentNames[indexB];
+
+        let newComponentIDs = this.state.componentIDs.slice();
+        let tempID = this.state.componentIDs[indexB];
+
         newComponentNames[indexB] = newComponentNames[indexA];
-        newComponentNames[indexA] = temp;
+        newComponentNames[indexA] = tempComponent;
+
+        newComponentIDs[indexB] = newComponentIDs[indexA];
+        newComponentIDs[indexA] = tempID;
  
-        this.setState({componentNames: newComponentNames});
+        this.setState({componentNames: newComponentNames, componentIDs: newComponentIDs});
+        localStorage.setItem(this.state.pageID+'-componentNames',newComponentNames);
+        localStorage.setItem(this.state.pageID+'-componentIDs',newComponentIDs)
     }
-  
+
+    generateKey = (componentName, index) => {
+        return `${componentName}-${ index }-${ new Date().getTime() }`;
+    }
     // reindexComponents(){
     //     for
     // }
@@ -127,7 +182,7 @@ export default class DynamicPage extends React.Component {
 
         // alert(this.state.componentNames)
 
-        this.state.componentNames.forEach((componentName, index) => {
+        this.state.componentIDs.forEach((componentID, index) => {
             // if (this.adminEditMode){
  
                 let callbacks = {
@@ -136,9 +191,14 @@ export default class DynamicPage extends React.Component {
                     moveComponentDown: ()=>{this.moveComponentDown(index)},
                     addComponentAtIndex: this.addComponentAtIndex
                 }
+                let componentName = this.state.componentNames[index]
+                // alert(`newID-${newID}`)
+                // alert(newID)
                 const Component = this.componentMapping[componentName];
                 let newComponent = <AdminComponentWrapper key ={`${componentName}+${index}`} componentOptions = {this.componentOptions} index = {index}
-                                     componentCount = {this.state.componentNames.length} adminProps = {this.adminProps} callbacks = {callbacks} ><Component webStyle = {this.props.webStyle}/></AdminComponentWrapper>
+                                     componentCount = {this.state.componentNames.length} adminProps = {this.adminProps} callbacks = {callbacks} >
+                                         <Component webStyle = {this.props.webStyle} key={componentID} id = {componentID}/>
+                                    </AdminComponentWrapper>
                 // let newComponent = <MakeAdminComponent key ={`${componentName}`} newComponent = {Component} index = {index} adminProps = {this.adminProps} componentOptions = {this.componentOptions}
                 //                     componentCount = {this.state.componentNames.length} callbacks = {callbacks}/>
                 pageComponents.push(newComponent)

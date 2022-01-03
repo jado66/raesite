@@ -17,5 +17,6 @@ export default function Image(props) {
     }, [props.src])
 
 
-    return (image ? <img className={"boxShadow"} src={image} style = {{...props.style, height:"400px"}} /> : 'Loading...')
+    return (image ? <img className={"photo"} src={image} style = {{...props.style}} /> : 'Loading...')
 }
+//boxShadow

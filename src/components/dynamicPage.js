@@ -1,11 +1,13 @@
 import Header from "./header";
 import Navbar from "./navbar";
+import BlogPreview from "./blogPreview";
 import React from "react";
+import DynamicForm from "./dynamicForm";
+import CardPaymentBlock from "./cardPaymentBlock";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSortUp, faSortDown, faThList } from '@fortawesome/free-solid-svg-icons'
 import Mosaic from "./mosaic";
 import WebsiteStyleEditor from "./styleEditor";
-import equal from 'fast-deep-equal'
 
 
 export default class DynamicPage extends React.Component {
@@ -27,6 +29,9 @@ export default class DynamicPage extends React.Component {
             // Footer,
             Mosaic:Mosaic,
             Navbar:Navbar,
+            CardPaymentBlock:CardPaymentBlock,
+            DynamicForm:DynamicForm,
+            BlogPreview:BlogPreview,
             // Gallery,
             // NewsletterSignup,
             // BlogFeedAppointments,
@@ -76,12 +81,14 @@ export default class DynamicPage extends React.Component {
     //     }
     //   }
     componentDidMount(){
-        const componentNames = localStorage.getItem(this.state.pageID+'-componentNames').split(',');
-        const componentIDs = localStorage.getItem(this.state.pageID+'-componentIDs').split(',')
+        const componentNamesString = localStorage.getItem(this.state.pageID+'-componentNames')
+        const componentIDsString = localStorage.getItem(this.state.pageID+'-componentIDs')
         
         
 
-        if (componentNames && componentIDs){
+        if (componentNamesString && componentIDsString){
+            let componentNames = componentNamesString.split(',');
+            let componentIDs = componentIDsString.split(',');
             // alert("Names: "+componentNames)
             // alert("IDs: "+componentIDs)
             this.setState({componentNames: componentNames,componentIDs:componentIDs})
@@ -214,10 +221,10 @@ export default class DynamicPage extends React.Component {
  
         return (
             <div style={{backgroundColor:this.props.webStyle.lightShade}}>    
-                <WebsiteStyleEditor webStyle = {this.props.webStyle} updateWebStyle = {this.props.updateWebStyle} closeStyleEditor = {this.props.closeStyleEditor} showStyleEditor = {this.state.showStyleEditor}
-                                    isStyleEditorMinimized = {this.state.isStyleEditorMinimized} minimizeStyleEditor = {this.minimizeStyleEditor} expandStyleEditor = {this.expandStyleEditor}/>
+                <WebsiteStyleEditor webStyle = {this.props.webStyle} updateWebStyle = {this.props.updateWebStyle} closeStyleEditor = {this.props.closeStyleEditor} showStyleEditor = {this.props.showStyleEditor}
+                                    showStyleEditor = {this.props.showStyleEditor} minimizeStyleEditor = {this.minimizeStyleEditor} expandStyleEditor = {this.expandStyleEditor}/>
             
-                <div id = "outerSection" style={{backgroundColor:this.props.webStyle.lightAccent,width:`${this.props.webStyle.centerWidth}%`,margin:"auto"}}>
+                <div id = "outerSection" style={{backgroundColor:this.props.webStyle.lightAccent,width:`${this.props.webStyle.centerWidth}%`,margin:"auto", paddingBottom: "50px"}}>
                                 {/* <div  > */}
 
                     <div id = "mainSection" style={{width:`${this.props.webStyle.secondCenterWidth}%`,margin:"auto"}}> {/* Includes everything inside the margin */}
@@ -259,17 +266,21 @@ class AdminComponentWrapper extends React.Component {
             this.setState({areButtonsVisible: showButtons})
     }
     openAddComponentAbove(){
-        alert("Open above")
-        this.setState({areAboveOptionsVisible:true,newComponentIndex:this.state.index-1})
+        // alert("Open above")
+        this.setState({areAboveOptionsVisible:true,areBelowOptionsVisible:false,newComponentIndex:this.state.index})
     }
     
     openAddComponentBelow(){
-        this.setState({areAboveOptionsVisible:true,newComponentIndex:this.state.index+1})
+        this.setState({areBelowOptionsVisible:true,areAboveOptionsVisible:false,newComponentIndex:this.state.index+1})
+    }
+
+    closeAddComponents(){
+        this.setState({areBelowOptionsVisible:false,areAboveOptionsVisible:false,newComponentIndex:this.state.index})
     }
     
     addNewComponent(componentName){
         // alert(`Add at index ${this.state.index}`)
-        this.state.callbacks.addComponentAtIndex(this.state.index,componentName)
+        this.state.callbacks.addComponentAtIndex(this.state.newComponentIndex,componentName)
         // Not sure if this does anything to do a rerender
         this.setState({
             areButtonsVisible: false,
@@ -283,29 +294,45 @@ class AdminComponentWrapper extends React.Component {
         let buttonClass = this.state.areButtonsVisible ? "adminbuttons" :"hidden"
  
         let options = this.state.componentOptions.map((option) => (
-            <li key ={option} onClick = {()=>{this.addNewComponent(option)}}>{option}</li>
+            <button key ={option} onClick = {()=>{this.addNewComponent(option)}}>{option}</button>
             ))
+
+        options.push(
+            <button key ={"deleteButton"} onClick = {()=>{this.closeAddComponents()}}>X</button>
+        )
 
     return ( 
         
-        <div className = {"flex-col"} onMouseEnter={() => this.setButtonsVisibility(true)} onMouseLeave={() => this.setButtonsVisibility(false)}>
+        <div className = {"flex-col"} onMouseEnter={() => this.setButtonsVisibility(true)} onMouseLeave={() => {this.setButtonsVisibility(false);this.closeAddComponents()}}>
             {/* Above component */}
-            {this.state.areAboveOptionsVisible && <div><ul>{options}</ul></div> }
+            {this.state.areAboveOptionsVisible && <div className = {"flex-row component-options"}>{options}</div> }
                 {/* To the right of component */}
                 <div className = {"flex-row"} style={{position:"relative"}}>
-                    {this.props.index}{this.children}
+                    {this.children}
                     <div className = {"flex-col floatOnTop"}>
-                        <div style={{height:"100%",display:"flex",flexDirection:"column",justifyContent:"baseline"}}>
+                        <div style={{height:"100%",display:"flex",flexDirection:"column",justifyContent:"baseline",zIndex:999}}>
                             {/* {this.props.index != 0 && <button  className = {buttonClass} onClick = {this.openAddComponentAbove}>Add <FontAwesomeIcon   icon={faSortUp} /></button>} */}
 
-                            {this.state.index != 0 && <button  className = {buttonClass} onClick = {this.state.callbacks.moveComponentUp}>Move <FontAwesomeIcon   icon={faSortUp} /></button>}
+                            <div className = {"flex-row"}>
+                                {this.state.index != 0 && <button  className = {buttonClass} onClick = {this.openAddComponentAbove}>Add <FontAwesomeIcon   icon={faSortUp} /></button>}
+                                {this.state.index != 0 && <button  className = {buttonClass} onClick = {this.state.callbacks.moveComponentUp}>Move <FontAwesomeIcon   icon={faSortUp} /></button>}
+                            </div>
+                            
+                            <div className = {"flex-row"}>
                             <button  className = {buttonClass} onClick = {this.state.callbacks.deleteComponent}>Delete</button >
-                            {this.props.index != this.state.componentCount - 1 && <button  className = {buttonClass} onClick = {this.state.callbacks.moveComponentDown}>Move <FontAwesomeIcon   icon={faSortDown} /></button>}
+                            <button  className = {buttonClass} onClick = {this.closeAddComponents}>X</button >
+                            </div>
+                            
+                            <div className = {"flex-row"}>
+                                <button  className = {buttonClass} onClick = {this.openAddComponentBelow}>Add <FontAwesomeIcon   icon={faSortDown} /></button>
+
+                                {this.props.index != this.state.componentCount - 1 && <button  className = {buttonClass} onClick = {this.state.callbacks.moveComponentDown}>Move <FontAwesomeIcon   icon={faSortDown} /></button>}
+                            </div>
                         </div>
                     </div>
             </div>
             {/* Below component */}
-            {this.state.areBelowOptionsVisible && <div><ul>{options}</ul></div>}
+            {this.state.areBelowOptionsVisible && <div className = {"flex-row component-options"}>{options}</div>}
         
           </div>
     )

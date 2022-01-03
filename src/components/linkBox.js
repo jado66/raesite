@@ -56,7 +56,7 @@ export default class LinkBox extends React.Component {
   render = () => {
 
     return(
-      <div className={"link-box boxShadow"}>
+      <div className={"link-box boxShadow"} style={{marginBottom:"20px",marginTop:"20px"}}>
             <ContentEditable
                     innerRef={this.contentEditable1}
                     html={this.state.h2} // innerHTML of the editable div

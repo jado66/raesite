@@ -29,7 +29,7 @@ function App() {
   const [userIsAdmin, setUserIsAdmin] = useState(false);
   const [viewAsNormalUser, setViewAsNormalUser] = useState(false);
   const [blogCount, setBlogCount] = useState(0)
-  const [isShowWebsiteStyleEditor, showWebsiteStyleEditor] = useState(false)
+  const [isShowWebsiteStyleEditor, showWebsiteStyleEditor] = useState(true)
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
   const [webStyle,setWebStyle] = useState(
@@ -57,7 +57,7 @@ function App() {
     // Update the document title using the browser API
     getIsUserAdmin();
     getBlogCount();
-  });
+  }, []);
 
   const updateWebStyle = (state) => {
     setWebStyle({...webStyle,
@@ -87,12 +87,16 @@ function App() {
     setBlogCount(parseInt(count))
   }
 
+  const hideWebsiteStyleEditor = () => {
+    // alert("hide")
+    showWebsiteStyleEditor(false)
+  }
 
   return (
     <div className="App" style={{backgroundColor:webStyle.lightShade}}>
       
       { isShowWebsiteStyleEditor == true && 
-        <WebsiteStyleEditor webStyle = {webStyle} updateWebStyle = {updateWebStyle} closeStyleEditor = {()=>{showWebsiteStyleEditor(false);}}/>
+        <WebsiteStyleEditor webStyle = {webStyle} updateWebStyle = {updateWebStyle} closeStyleEditor = {hideWebsiteStyleEditor}/>
       }
 
       <Router>
@@ -123,12 +127,14 @@ function App() {
           <Route path="/test">
               {/* <TestPage/> */}
               <DynamicPage  webStyle = {webStyle} userIsAdmin = {userIsAdmin} viewAsNormalUser = {viewAsNormalUser}
-                            defaultComponentList = { ["Header","Navbar","Mosaic","Header","Mosaic"]}  componentOptions = {["Navbar","Header","Mosaic"]}
-                               updateWebStyle = {updateWebStyle} closeStyleEditor = {()=>{showWebsiteStyleEditor(false);}}/>
+                            defaultComponentList = { ["Header","Navbar","Mosaic","Header","Mosaic","BlogPreview"]}  componentOptions = {["Navbar","Header","Mosaic","DynamicForm","CardPaymentBlock","BlogPreview"]}
+                               updateWebStyle = {updateWebStyle} closeStyleEditor = {hideWebsiteStyleEditor} showStyleEditor = {isShowWebsiteStyleEditor}/>
           </Route>
           <Route path="/blog-post/:id" component = {ViewPostPage}/>
           <Route path="/">
-              <Home webStyle = {webStyle} blogCount = {blogCount} userIsAdmin = {userIsAdmin} viewAsNormalUser = {viewAsNormalUser} />
+          <DynamicPage  webStyle = {webStyle} userIsAdmin = {userIsAdmin} viewAsNormalUser = {viewAsNormalUser}
+                            defaultComponentList = { ["Header","Navbar","Mosaic","Header","Mosaic","BlogPreview"]}  componentOptions = {["Navbar","Header","Mosaic","DynamicForm","CardPaymentBlock","BlogPreview"]}
+                               updateWebStyle = {updateWebStyle} closeStyleEditor = {hideWebsiteStyleEditor} showStyleEditor = {isShowWebsiteStyleEditor}/>
           </Route>
           
           

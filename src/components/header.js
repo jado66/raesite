@@ -34,6 +34,13 @@ export default class Header extends React.Component {
     
   };
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.webStyle.lightAccent !== this.props.webStyle.lightAccent) {
+      alert("background color change")
+    }
+  }
+  
+
   handleChange = evt => {
     this.setState({html: evt.target.value});
     localStorage.setItem(this.props.id+'-header',evt.target.value);

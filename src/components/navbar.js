@@ -42,11 +42,11 @@ export default function Navbar(props){
       setNewLinkInput(e.target.value);
     }
 
-    
+    //  onMouseEnter={()=>{setButtonsVisible(true)}} onMouseLeave={()=>{setButtonsVisible(false)}} >
 
     return(
-            <div style={{backgroundColor:props.webStyle.darkShade,position: "sticky",top: 0, alignSelf: "flex-start",width:"100%",zIndex:1}}
-                 onMouseEnter={()=>{setButtonsVisible(true)}} onMouseLeave={()=>{setButtonsVisible(false)}} >
+            <div className="fullWidth" style={{backgroundColor:props.webStyle.darkShade,position: "sticky",top: 0, alignSelf: "flex-start",zIndex:1}}>
+                
               <div className="topnav " style={{margin:"auto", display:"flex",justifyContent:"space-evenly",width:"80%"}}>
                 
                 {menuItems}

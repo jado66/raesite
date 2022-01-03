@@ -55,7 +55,7 @@ class BlogBanner extends React.Component {
                     </div>
 
       let picture = <div className = {"flex-col"} style = {{width:"40%", margin:"20px"}}  onClick={this.routeChange}>
-                      <div className={"boxShadow"} style = {{height:"300px",  width:"100%", backgroundColor:this.props.webStyle.mainBrandColor}}></div>
+                      <div className={"boxShadow"} style = {{height:"300px",  width:"100%", backgroundColor:this.props.webStyle.darkShade}}></div>
                     </div>
       
       let adminButtons =  <div className = {"flex-col"} style={{justifyContent:"space-evenly",height:"300px", margin:"20px"}}>

@@ -22,10 +22,60 @@ export default class WebsiteStyleEditor extends React.Component {
                     isMinimized:true
                   }
     }
+
+
+    componentDidMount(){
+
+      let newState = {}
+      let stored_lightShade  = localStorage.getItem("webStyle-lightShade");
+      if (stored_lightShade){
+        newState.lightShade = stored_lightShade
+      }
+
+      let stored_lightAccent = localStorage.getItem("webStyle-lightAccent");
+      if (stored_lightAccent){
+        newState.lightAccent = stored_lightAccent
+      }
+      let stored_mainBrandColor = localStorage.getItem("webStyle-mainBrandColor");
+      if (stored_mainBrandColor){
+        
+        newState.mainBrandColor = stored_mainBrandColor
+
+      }
+      let stored_darkAccent = localStorage.getItem("webStyle-darkAccent");
+      if (stored_darkAccent){
+        
+        newState.darkAccent = stored_darkAccent
+
+      }
+      let stored_darkShade = localStorage.getItem("webStyle-darkShade");
+      if (stored_darkShade){
+        
+        newState.darkShade = stored_darkShade
+
+      }
+      // widths
+      let stored_centerWidth = localStorage.getItem("webStyle-centerWidth");
+      if (stored_centerWidth){
+        
+        newState.centerWidth = stored_centerWidth
+
+      }
+      let stored_secondCenterWidth = localStorage.getItem("webStyle-secondCenterWidth");
+      if (stored_secondCenterWidth){
+        newState.secondCenterWidth = stored_secondCenterWidth
+
+      }
+
+
+      this.setState(newState)
+
+      this.props.updateWebStyle(newState)
+    }
   
     handleInputChange = (e) => {
       // this.state.lightShade = e.target.value;
-
+      localStorage.setItem('webStyle-'+e.target.name,e.target.value);
       this.setState({
           [e.target.name]: e.target.value
       });
@@ -35,7 +85,7 @@ export default class WebsiteStyleEditor extends React.Component {
 
     render() {
 
-        let showRibbonClass = (this.props.showStyleEditor? "" :"hidden")
+        let showRibbonClass = (this.props.showStyleEditor? "" :" hidden")
       
         return (
           <div className={"flex-row"+showRibbonClass} style={{position: "sticky",top: 0, alignSelf: "flex-start",zIndex:999}} >
@@ -86,7 +136,7 @@ export default class WebsiteStyleEditor extends React.Component {
             <MenuButton className={"styleEditorIcon"} onClick={()=>{alert("save");this.props.closeStyleEditor()}}><FontAwesomeIcon  icon={faSave} /></MenuButton>
             <MenuButton className={"styleEditorIcon"} onClick={()=>{alert("hide");this.props.minimizeStyleEditor()}}><FontAwesomeIcon  icon={faSortUp} /></MenuButton>
 
-            <MenuButton className={"styleEditorIcon"} onClick={this.props.closeStyleEditor}><FontAwesomeIcon  icon={faTimes} /></MenuButton>
+            <MenuButton className={"styleEditorIcon"} onClick={()=>{this.props.closeStyleEditor()}}><FontAwesomeIcon  icon={faTimes} /></MenuButton>
  
               {/* <FontAwesomeIcon className={"styleEditorIcon"}  icon={faPalette} />
               <FontAwesomeIcon className={"styleEditorIcon"}  icon={faArrowsAltH} /> */}

@@ -75,7 +75,7 @@ const SplitForm = (props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{textAlign:"left",margin:"auto",width:"30%",padding:"20px",backgroundColor:"white",border:"3px solid black",borderRadius:"15px"}}>
+    <form onSubmit={handleSubmit} style={{textAlign:"left",margin:"auto",width:"100%",padding:"20px",backgroundColor:"white",border:"3px solid black",borderRadius:"15px"}}>
       <label>Payment Amount:
       <input className={"StripeElement"} value = {props.price} readOnly = {true} style ={{border:"none",fontSize:"x-large",paddingLeft:"0"}}/>
       </label>

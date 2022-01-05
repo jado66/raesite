@@ -23,16 +23,41 @@ body {
 .full-height {
   height: 100%;
 }
-
-.floatOnTop {
+.floatOnTopLeft {
+  position: absolute;
+  left: -100px;
+  height: 100%;
+}
+.floatOnTopRight {
   position: absolute;
   right: -100px;
   height: 100%;
+}
+.floatOnTop {
+  position: absolute;
+  height: 100%;
+}
+
+.floatOnTopCentered {
+  position: relative;
+  height: 100%;
+  left: 50%;
+  /* top: -10px; */
+  transform: translateX(-50%);
+  transform: translateY(-15%);
 }
 
 .App {
   /* background-color: pink; */
   height: 100%;
+}
+
+.socialMediaLink {
+  font-size: xx-large;
+  margin: 0 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
 }
 
 .styleEditorIcon {
@@ -72,18 +97,12 @@ ul.topnav {
 
 .topnav a {
   font-size: x-large;
-  float: left;
+  margin: auto;
   /* color: #f2f2f2; */
   text-align: center;
-  padding: 14px;
+  padding: 14px 0px;
   text-decoration: none;
   /* font-size: 17px; */
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: rgb(183, 216, 179);
-  color: black;
 }
 
 /* Add a color to the active/current link */

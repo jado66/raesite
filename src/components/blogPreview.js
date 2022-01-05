@@ -32,7 +32,7 @@ export default function BlogPreview(props) {
   
     return(
       <div>          
-            <div id = "blog" style = {{paddingTop:"40px"}}>
+            <div id = "blog" style = {{paddingTop:"40px", marginBottom:"25px"}}>
               {blogBanners}
             </div>
       </div>

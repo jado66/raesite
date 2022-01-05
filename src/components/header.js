@@ -8,7 +8,7 @@
 //     useEffect( () => {
 //         // Anything in here is fired on component mount.
 //         // var myStorage = window.localStorage;
-//         const storedHeader = localStorage.getItem(props.id+'-header');
+//         const storedHeader = localStorage.getItem(props.id);
 //         alert(props.id+": "+storedHeader)
 //      }, []);
 
@@ -18,7 +18,7 @@
     
 //     return(
 //     <div {...inputProps}  className="title" style = {{width:`${props.webStyle.centerWidth}%`, margin:"auto",backgroundColor:props.webStyle.lightAccent}}>
-//         ID:{props.id}<h1 style = {{margin:"0", padding: "20px 0px", color:props.webStyle.darkShade}} contentEditable spellCheck={false}>{headerValue}</h1>
+//         ID:{props.id}<h2 style = {{margin:"0", padding: "20px 0px", color:props.webStyle.darkShade}} contentEditable spellCheck={false}>{headerValue}</h2>
 //     </div>)
 // }
 
@@ -43,14 +43,19 @@ export default class Header extends React.Component {
 
   handleChange = evt => {
     this.setState({html: evt.target.value});
-    localStorage.setItem(this.props.id+'-header',evt.target.value);
+    localStorage.setItem(this.props.id,evt.target.value);
   };
 
   componentDidMount(){
-    const storedHeader = localStorage.getItem(this.props.id+'-header');
+    const storedHeader = localStorage.getItem(this.props.id);
 
     if (storedHeader){
         this.setState({html: storedHeader})
+    }
+    // Set header to page name on new render
+    
+    else if (this.props.index === 0){
+      this.setState({html: `<h1>${this.props.pageName}</h1>`})
     }
   }
 
@@ -69,4 +74,4 @@ export default class Header extends React.Component {
   };
 };
 
-//<h1 style = {{margin:"0", padding: "20px 0px", color:props.webStyle.darkShade}} contentEditable spellCheck={false}>{headerValue}</h1>
+//<h2 style = {{margin:"0", padding: "20px 0px", color:props.webStyle.darkShade}} contentEditable spellCheck={false}>{headerValue}</h2>

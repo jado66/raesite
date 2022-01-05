@@ -1,10 +1,11 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { compress, decompress } from "lz-string"
 
 export default function PictureFrame(props){
     const [imageUrl, setImageUrl] = useState("")
     const [areButtonsVisible, setButtonsVisible] = useState(null)
+    const inputFile = useRef(null) 
 
 
     // Similar to componentDidMount and componentDidUpdate:
@@ -36,7 +37,6 @@ export default function PictureFrame(props){
     const removePicture = () => {
         setImageUrl("")
         localStorage.removeItem(props.id);
-        localStorage.clear();
     }
 
     const imageToDataUri = (img, width, height) => {
@@ -114,7 +114,7 @@ export default function PictureFrame(props){
 
                 // let ratio = this.height/this.width;
                 // let height = 350 * ratio
-                let dims = calculateAspectRatioFit(this.width, this.height, 350, 600)
+                let dims = calculateAspectRatioFit(this.width, this.height, 600, 600)
 
                 let newResult = imageToDataUri(image,dims.width,dims.height)
 
@@ -138,39 +138,37 @@ export default function PictureFrame(props){
       }
 
 
+    const buttonStyle = {backgroundColor:props.webStyle.lightShade,color:props.webStyle.darkShade,
+                         borderRadius: "3px", border: `1px solid ${props.webStyle.darkShade}`}
+
     return(
-        <div onMouseEnter={()=>{setButtonsVisible(true)}} onMouseLeave={()=>{setButtonsVisible(false)}}>
+        <div className="pictureFrameDiv" onMouseEnter={()=>{setButtonsVisible(true)}} onMouseLeave={()=>{setButtonsVisible(false)}} style={{flex: "1"}}>
             <div  style = {{ position: "relative", margin:"auto", marginBottom:"20px",marginTop:"20px",minHeight:"100px"}}  > 
             {imageUrl ? 
                 <img className={"boxShadow"} src={imageUrl} style={{width:"90%"}}/>
                 :
-                <div className="boxShadow" style={{width:"90%",minHeight:"300px",backgroundColor:props.webStyle.darkShade,margin:"auto"}}></div>
+                <div className="boxShadow blankDiv" style={{width:"90%",minHeight:"300px",backgroundColor:props.webStyle.darkShade,margin:"auto"}}></div>
             }
             {
                 areButtonsVisible &&
-                <div style={{ position: "absolute",top: "0", left: "0",display:"flex",flexDirection:"row"}}>
+                <div style={{ position: "absolute",top: "0", left: "5%",display:"flex",flexDirection:"row"}}>
                     <div style={{flexDirection:"row",justifyContent:'center',width:"100%",marginBottom:"10px",alignSelf:"flex-end"}}> 
-                        {!imageUrl ?
-                            <input
-                                type="file"
-                                name="myImage"
-                                onChange={(event) => {
-                                    console.log(event.target.files[0]);
-                                    updateImage(event.target.files[0]);
-                                    }}
-                            />
-                            :
-                            <input
-                                type="file"
-                                name="myImage"
-                                onChange={(event) => {
+                        <input
+                            style={{display:"none"}}
+                            type="file"
+                            ref={inputFile} 
+                            onChange={(event) => {
                                 console.log(event.target.files[0]);
                                 updateImage(event.target.files[0]);
                                 }}
                             />
+                        {!imageUrl ?
+                            <input type ="button" value="Upload Image" onClick={()=>{inputFile.current.click()}} style={buttonStyle}/>
+                            :
+                            <input type ="button" value="Change Image" onClick={()=>{inputFile.current.click()}} style={buttonStyle}/>
                         }
                         {imageUrl &&
-                            <button onClick={()=>removePicture()}>Remove Picture</button>
+                            <input type ="button" value="Remove Picture" onClick={()=>removePicture()} style={buttonStyle}/>
                         }
                     </div>
                 </div>

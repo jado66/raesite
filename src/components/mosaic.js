@@ -2,10 +2,10 @@ import LinkBox from "./linkBox"
 import PictureFrame from "./pictureFrame"
 
 export default function Mosaic(props){
-    const rightLinkBoxID = `${props.id}-rightLinkBox`
-    const rightPictureFrameID = `${props.id}-rightPictureFrame`
-    const leftLinkBoxID = `${props.id}-leftLinkBox`
-    const leftPictureFrameID = `${props.id}-leftPictureFrame`
+    const rightLinkBoxID = `${props.id}-Rl`
+    const rightPictureFrameID = `${props.id}-Rp`
+    const leftLinkBoxID = `${props.id}-Ll`
+    const leftPictureFrameID = `${props.id}-Lp`
 
 
     return(

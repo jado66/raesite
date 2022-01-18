@@ -142,17 +142,16 @@ export default function PictureFrame(props){
                          borderRadius: "3px", border: `1px solid ${props.webStyle.darkShade}`}
 
     return(
-        <div className="pictureFrameDiv" onMouseEnter={()=>{setButtonsVisible(true)}} onMouseLeave={()=>{setButtonsVisible(false)}} style={{flex: "1"}}>
-            <div  style = {{ position: "relative", margin:"auto", marginBottom:"20px",marginTop:"20px",minHeight:"100px"}}  > 
+        <div className={"relative-div "+props.className} onMouseEnter={()=>{setButtonsVisible(true)}} onMouseLeave={()=>{setButtonsVisible(false)}} style={{flex: "1"}}>
             {imageUrl ? 
-                <img className={"boxShadow"} src={imageUrl} style={{width:"90%"}}/>
+                <img className={"boxShadow w-100"} src={imageUrl} />
                 :
-                <div className="boxShadow blankDiv" style={{width:"90%",minHeight:"300px",backgroundColor:props.webStyle.darkShade,margin:"auto"}}></div>
+                <div className="boxShadow blankDiv w-100" style={{minHeight:"300px",backgroundColor:props.webStyle.darkAccent}}></div>
             }
             {
                 areButtonsVisible &&
-                <div style={{ position: "absolute",top: "0", left: "5%",display:"flex",flexDirection:"row"}}>
-                    <div style={{flexDirection:"row",justifyContent:'center',width:"100%",marginBottom:"10px",alignSelf:"flex-end"}}> 
+                <div className="row relative-l">
+                    <div > 
                         <input
                             style={{display:"none"}}
                             type="file"
@@ -174,6 +173,5 @@ export default function PictureFrame(props){
                 </div>
             }
             </div> 
-        </div>
     )
 }

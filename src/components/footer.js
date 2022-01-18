@@ -33,44 +33,25 @@ export default class SocialLinks extends React.Component {
       Soundcloud: faSoundcloud,
       Snapchat: faSnapchatGhost
     };
-
-    this.links = [
-      {
-        icon  :"Instagram",
-        href:"https://www.instagram.com/larae.day/"
-      },
-      {
-        icon  :"Tiktok",
-        href:"https://www.tiktok.com/@larae.day?"
-      },
-      {
-        icon  :"Facebook",
-        href:"https://www.facebook.com/larae.day.erwin/"
-      },
-      {
-        icon  :"Pinterest",
-        href:"https://www.pinterest.com/laraedaylifebylarae"
-      },
-      {
-        icon  :"Email",
-        href:"mailto:larae.day.lifebylarae@gmail.com"
-      }
-    ]
   };
 
   render = () => {
 
-    const socialLinks = this.links.map(({icon,href}) =>
-      <Link to={{ pathname: href}} target={"_blank"} key={icon} style={{color:this.props.webStyle.darkShade}}><FontAwesomeIcon className={"socialMediaLink"} icon={this.componentMapping[icon]} /></Link>
-  );
+    const socialLinks = this.props.socialMedias.filter(({location}) => {
+      if (location === "New Link") {
+        return false; // skip
+      }
+      return true;
+    }).map(({link,location}) =>
+      <Link className='col' key = {location} to={{ pathname: link}} target={"_blank"} key={location} style={{color:this.props.webStyle.darkShade}}><FontAwesomeIcon className={"socialMediaLink m-auto"} icon={this.componentMapping[location]} /></Link>
+    );
 
     return(
-            <div className="title" style = {{width:`${this.props.webStyle.centerWidth}%`, margin:"auto",backgroundColor:this.props.webStyle.lightAccent, marginBottom:"25px"}}>
-              <div className='flex-row' style={{justifyContent:"space-evenly"}}>
+            <div className='mt-5' style = {{width:`${this.props.webStyle.centerWidth}%`, margin:"25px auto"}}>
+              <div className='row' style={{justifyContent:"space-evenly"}}>
                 {socialLinks}
               </div>
             </div>)
   };
 };
 
-//<h1 style = {{margin:"0", padding: "20px 0px", color:props.webStyle.darkShade}} contentEditable spellCheck={false}>{footerValue}</h1>

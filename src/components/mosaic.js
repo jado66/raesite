@@ -7,23 +7,41 @@ export default function Mosaic(props){
     const leftLinkBoxID = `${props.id}-Ll`
     const leftPictureFrameID = `${props.id}-Lp`
 
-
-    return(
-        <div className = {"flex-row"} style = {{paddingTop:"40px", paddingBottom:"40px"}}>
-            <div className = {"flex-col width-50"}>
-                {/* <Image className={"boxShadow"} imgTitle = {"Headshot"} style = {{ width:"90%", margin:"auto", marginBottom:"40px", backgroundColor:props.webStyle.mainBrandColor}}/> */}
-                {/* <div className={"boxShadow"} style = {{ width:"90%", margin:"auto", marginBottom:"40px", backgroundColor:props.webStyle.mainBrandColor,height:"400px"}}  > </div> */}
-                <PictureFrame webStyle = {props.webStyle} key = {leftPictureFrameID} id = {leftPictureFrameID}/>
-                <LinkBox title = {"Hey!"} subtitle = {"I'm LaRae"} linkText = {"Read More"} link = {"/about"} key = {leftLinkBoxID} id = {leftLinkBoxID}/>
+    if (props.isMobile){
+        return(
+        <div className = {"row mb-5"} >
+            <div className="col">
+                <div className = {"row mb-5"}>
+                    <div className="row g-0 mb-5">
+                        <PictureFrame  webStyle = {props.webStyle} key = {leftPictureFrameID} id = {leftPictureFrameID}/>
+                    </div>
+                        <LinkBox key = {leftLinkBoxID} id = {leftLinkBoxID} webStyle = {props.webStyle} adminProps = {props.adminProps}/>
+                </div>
+                <div className = {"row mb-5"}>
+                    <div className="row g-0 mb-5">
+                        <PictureFrame webStyle = {props.webStyle} key = {rightPictureFrameID} id = {rightPictureFrameID}/>
+                    </div>
+                    <LinkBox key = {rightLinkBoxID} id = {rightLinkBoxID} webStyle = {props.webStyle} adminProps = {props.adminProps}/>
+                </div>
             </div>
-            <div className = {"flex-col width-50"}>
-                <LinkBox title = {"Coaching & Consulting"} subtitle = {"with LaRae"} linkText = {"Read More"} link = {"/coaching"} key = {rightLinkBoxID} id = {rightLinkBoxID}/>
-                {/* <div className={"boxShadow"} style = {{ width:"90%", margin:"auto", marginTop:"40px", backgroundColor:props.webStyle.mainBrandColor,height:"400px"}}  > </div> */}
-                <PictureFrame webStyle = {props.webStyle} key = {rightPictureFrameID} id = {rightPictureFrameID}/>
-
-                {/* <Image imgTitle = {"Headshot"} style = {{ width:"90%", margin:"auto", marginTop:"40px", backgroundColor:props.webStyle.mainBrandColor}}/> */}
+        </div>)
+    }
+    else{
+        return(
+            <div className = {"row mb-5 g-0"} >
+                <div className = {"col me-3"}>
+                    <div className="row g-0 mb-5 w-100">
+                        <PictureFrame  webStyle = {props.webStyle} key = {leftPictureFrameID} id = {leftPictureFrameID}/>
+                    </div>
+                        <LinkBox key = {leftLinkBoxID} id = {leftLinkBoxID} webStyle = {props.webStyle} adminProps = {props.adminProps}/>
+                </div>
+                <div className = {"col ms-3"}>
+                    <div className="row g-0 mb-5">
+                        <LinkBox key = {rightLinkBoxID} id = {rightLinkBoxID} webStyle = {props.webStyle} adminProps = {props.adminProps}/>
+                    </div>
+                        <PictureFrame webStyle = {props.webStyle} key = {rightPictureFrameID} id = {rightPictureFrameID}/>
+                </div>
             </div>
-      </div>
-
-    )
+        )
+    }
 }

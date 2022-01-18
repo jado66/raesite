@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Merienda&display=swap");
 
 html,
 body {
@@ -37,6 +37,9 @@ body {
   position: absolute;
   height: 100%;
 }
+.floatOnTopNoHeight {
+  position: absolute;
+}
 
 .floatOnTopCentered {
   position: relative;
@@ -45,6 +48,51 @@ body {
   /* top: -10px; */
   transform: translateX(-50%);
   transform: translateY(-15%);
+}
+
+.icon-link {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  cursor: pointer;
+  font-size: large;
+  margin: 2.5px 0px;
+}
+
+.admin-button {
+  background: none !important;
+  border: none;
+  padding: 0 !important;
+  cursor: pointer;
+  font-size: medium;
+
+  margin: 2.5px 5px;
+}
+
+.navMenuHeader {
+  border: none;
+  color: white;
+  background: none;
+  white-space: nowrap;
+  font-size: x-large;
+  margin: auto;
+  /* color: #f2f2f2; */
+  text-align: center;
+  text-decoration: none;
+  /* font-family: "Great Vibes", cursive; */
+}
+
+.navMenu {
+  border: none;
+  color: white;
+  /* background: black; */
+  white-space: nowrap;
+  font-size: x-large;
+  /* margin: auto; */
+  /* color: #f2f2f2; */
+  text-align: center;
+  text-decoration: none;
+  /* font-family: "Great Vibes", cursive; */
 }
 
 .App {
@@ -68,17 +116,62 @@ body {
   border: none;
 }
 
+.styleEditorSubmenuIcon {
+  /* font-size: large; */
+  margin: 10px 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.product-feature {
+  list-style-type: none;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
 .styleEditorIcon:hover {
   color: rgb(82, 82, 82);
+}
+
+.bordered {
+  border: 3px solid black;
+}
+
+p {
+  margin-top: 0 !important;
+  font-size: larger;
+}
+
+.quickLink {
+  border: none;
+  white-space: nowrap;
+  font-size: x-large;
+  margin: auto;
+  /* color: #f2f2f2; */
+  text-align: center;
+  text-decoration: none;
+  font-family: "Calibri", cursive;
+  text-decoration: none;
 }
 
 /* .styleEditoColorPicker{
   
 } */
 
-.title {
+/* h1,
+h2,
+.nav,
+.brand-font,
+.navbar-brand,
+.navMenuHeader,
+.navMenu {
+  font-family: "Merienda";
+} */
+
+/* .title {
   font-family: "Great Vibes", cursive;
-}
+} */
 /* Add a black background color to the top navigation */
 .topnav {
   display: flex;
@@ -86,7 +179,7 @@ body {
   /* background-color: #333; */
   /* overflow: hidden; */
   /* width: calc(100vw); */
-  font-family: "Great Vibes", cursive;
+  /* font-family: "Great Vibes", cursive; */
 }
 
 /* Style the links inside the navigation bar */
@@ -97,12 +190,16 @@ ul.topnav {
 
 .topnav a {
   font-size: x-large;
-  margin: auto;
+  /* margin: auto; */
   /* color: #f2f2f2; */
   text-align: center;
   padding: 14px 0px;
   text-decoration: none;
   /* font-size: 17px; */
+}
+
+.link-centered {
+  margin: auto;
 }
 
 /* Add a color to the active/current link */
@@ -114,4 +211,14 @@ ul.topnav {
 /* Style the links inside the navigation bar */
 .topnav {
   list-style-type: none;
+}
+
+@media only screen and (max-width: 575px) {
+  th.font-shrink {
+    font-size: small !important;
+  }
+
+  .font-shrink > * {
+    font-size: small !important;
+  }
 }

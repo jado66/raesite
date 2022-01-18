@@ -30,7 +30,7 @@ export default class Caption extends React.Component {
   render = () => {
 
     return(
-        <div className={"link-box boxShadow"} style={{marginBottom:"20px",marginTop:"20px"}}>
+        <div className={"link-box boxShadow"}>
             <ContentEditable
                 innerRef={this.contentEditable}
                 html={this.state.p} // innerHTML of the editable div

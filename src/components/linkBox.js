@@ -11,6 +11,7 @@
 import React from 'react'
 
 import ContentEditable from 'react-contenteditable'
+import EditableLink from './editableLink';
 
 export default class LinkBox extends React.Component {
   constructor(props) {
@@ -56,23 +57,25 @@ export default class LinkBox extends React.Component {
   render = () => {
 
     return(
-      <div className={"link-box boxShadow"} style={{marginBottom:"20px",marginTop:"20px"}}>
+      <div className={"p-3 boxShadow"} style={{backgroundColor:this.props.webStyle.lightShade}}>
             <ContentEditable
+                    style={{color:this.props.webStyle.darkShade}}
                     innerRef={this.contentEditable1}
                     html={this.state.h2} // innerHTML of the editable div
                     disabled={false}       // use true to disable editing
                     onChange={this.handleChangeH2} // handle innerHTML change
-                    tagName='header' // Use a custom HTML tag (uses a div by default)
+                    tagName='h2' // Use a custom HTML tag (uses a div by default)
                     />
             <ContentEditable
+                    className='apply-font-secondary'
+                    style={{color:this.props.webStyle.darkShade}}
                     innerRef={this.contentEditable2}
                     html={this.state.h3} // innerHTML of the editable div
                     disabled={false}       // use true to disable editing
                     onChange={this.handleChangeH3} // handle innerHTML change
-                    tagName='header' // Use a custom HTML tag (uses a div by default)
+                    tagName='h3' // Use a custom HTML tag (uses a div by default)
                     />
-            
-            <a href = {this.props.link}>{this.props.linkText}</a>
+            <EditableLink webStyle = {this.props.webStyle} id = {this.props.id+"-link"} adminProps = {this.props.adminProps}/>
             </div>)
   };
 };

@@ -36,9 +36,9 @@ export default class ViewPostPage extends Component {
         return (
             <div style = {{width:"100%", margin:"auto",paddingBottom:"60px"}}>
         
-        <form id = {"newBlogForm"} className = {"flex-col"} style={{width:"60%",backgroundColor:"white",margin:"auto",borderRadius:"15px"}}>
-          <div style={{width:"80%",margin:"auto"}}>
-          <div className = {"flex-row"}>
+        <form id = {"newBlogForm"} className = {"col"} style={{width:"60%",backgroundColor:"white",margin:"auto",borderRadius:"15px"}}>
+          <div style={{margin:"auto"}}>
+          <div className = {"row"}>
           <input className = {"newPostInput"} name = "title" type={"text"} readOnly style={{width:"65%",paddingTop:"60px",paddingBottom:"40px",paddingLeft:"10px", border:"none",fontSize:"xx-large"}} 
             value ={this.state.blogObject.title}
             /> 

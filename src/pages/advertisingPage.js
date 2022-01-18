@@ -11,7 +11,7 @@ export default function AdvertisingPage(props) {
           <h3>Partner with LaRae</h3>
           <p style = {{width:"58%", margin:"auto",textAlign:"left", padding:"10px"}}>Please fill out the form below or email me at larae.day.lifebylarae@gmail.com if you are interested in collaborating, advertising, sponsoring, or featuring your services or products on my social media platforms or blog. My media kit is available upon request.</p>
         
-          <div className={"flex-col"} style =  {{width:"60%", margin:"auto",paddingTop:"20px",paddingBottom:"50px"}}>
+          <div className={"col"} style =  {{width:"60%", margin:"auto",paddingTop:"20px",paddingBottom:"50px"}}>
             <input style = {{paddingLeft:"5px"}} placeholder={"Name *"}></input>
             <input style = {{paddingLeft:"5px"}} placeholder={"Email *"}></input>
             <input style = {{paddingLeft:"5px"}} placeholder={"Subject"}></input>

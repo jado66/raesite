@@ -46,7 +46,7 @@ class BlogBanner extends React.Component {
         reverseBanner = false
       } 
       
-      let caption = <div className = {"flex-col"} onClick={this.routeChange} style={{width:"60%",margin:"20px"}} >
+      let caption = <div className = {"col"} onClick={this.routeChange} style={{width:"60%",margin:"20px"}} >
                       <div className={"boxShadow"} style={{backgroundColor:this.props.webStyle.lightShade,height:"300px"}}>
                         <h3>{this.state.blogObject.title}</h3>
                         <div style={{textAlign:"left", padding:"0px 20px"}}>{this.state.blogObject.caption}</div>
@@ -54,18 +54,18 @@ class BlogBanner extends React.Component {
                       </div>
                     </div>
 
-      let picture = <div className = {"flex-col"} style = {{width:"40%", margin:"20px"}}  onClick={this.routeChange}>
+      let picture = <div className = {"col"} style = {{width:"40%", margin:"20px"}}  onClick={this.routeChange}>
                       <div className={"boxShadow"} style = {{height:"300px",  width:"100%", backgroundColor:this.props.webStyle.darkShade}}></div>
                     </div>
       
-      let adminButtons =  <div className = {"flex-col"} style={{justifyContent:"space-evenly",height:"300px", margin:"20px"}}>
+      let adminButtons =  <div className = {"col"} style={{justifyContent:"space-evenly",height:"300px", margin:"20px"}}>
                             <input className={"boxShadow"} type = {"button"} value = {"Edit"} onClick={this.editBlogPost} style ={{border:"none",backgroundColor:this.props.webStyle.mainBrandColor,color:this.props.webStyle.lightShade}} />
                             <input className={"boxShadow"} type = {"button"} value = {"Delete"} style ={{border:"none",backgroundColor:this.props.webStyle.mainBrandColor,color:this.props.webStyle.lightShade}} />
                           </div>
   
       if (reverseBanner){
         return (
-          <div className={"flex-row blog-banner"} style={{width:"100%",margin:'auto'}} >
+          <div className={"row blog-banner"} style={{width:"100%",margin:'auto'}} >
             {caption}
             {picture}
            
@@ -77,7 +77,7 @@ class BlogBanner extends React.Component {
       }
       else{
         return (
-          <div className={"flex-row  blog-banner"}  style={{width:"100%",margin:'auto'}}>
+          <div className={"row  blog-banner"}  style={{width:"100%",margin:'auto'}}>
             
             {picture}
             {caption}

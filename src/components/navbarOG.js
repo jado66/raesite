@@ -199,22 +199,22 @@ class AdminLinkWrapper extends React.Component {
 
   return ( 
       
-      <div className = {"flex-row"} style={{flex:"0 0"}} onMouseEnter={() => this.setButtonsVisibility(true)} onMouseLeave={() => {this.setButtonsVisibility(false)}}>
+      <div className = {"row"} style={{flex:"0 0"}} onMouseEnter={() => this.setButtonsVisibility(true)} onMouseLeave={() => {this.setButtonsVisibility(false)}}>
         {/* To the right of component */}
-        <div className = {"flex-col floatOnTopCentered "+buttonClass} style={{color:this.props.webStyle.lightShade}}>
+        <div className = {"col floatOnTopCentered "+buttonClass} style={{color:this.props.webStyle.lightShade}}>
           {/* <FontAwesomeIcon className="icon-link" icon={faPencilAlt} onClick = {()=>{this.props.callbacks.addLinkAtIndex(this.props.index)}}/> */}
         </div>
-        <div className = {"flex-row"} style={{position:"relative", padding:"0px 50px"}}>
+        <div className = {"row"} style={{position:"relative", padding:"0px 50px"}}>
             {this.props.mode == "add/move" && <div>
-              <div className={"flex-col floatOnTop "+buttonClass} style={{color:this.props.webStyle.lightShade,left:"25px", justifyContent:"center"}}>
+              <div className={"col floatOnTop "+buttonClass} style={{color:this.props.webStyle.lightShade,left:"25px", justifyContent:"center"}}>
                 <FontAwesomeIcon className="icon-link" icon={faPlus} onClick = {()=>{this.props.callbacks.addLinkAtIndex(this.props.index)}}/>
               </div>
-              <div className={"flex-col floatOnTop "+buttonClass} style={{color:this.props.webStyle.lightShade,left:"0px", justifyContent:"center"}}>
+              <div className={"col floatOnTop "+buttonClass} style={{color:this.props.webStyle.lightShade,left:"0px", justifyContent:"center"}}>
                 {this.props.index != 0 && <FontAwesomeIcon className="icon-link" icon={faAngleDoubleLeft} onClick = {()=>{this.props.callbacks.moveLinkLeft(this.props.index)}}/>}
               </div>
             </div>}
             {this.props.mode == "delete" && <div>
-              <div className={"flex-col floatOnTop"} style={{color:this.props.webStyle.lightShade,left:"25px", justifyContent:"center"}}>
+              <div className={"col floatOnTop"} style={{color:this.props.webStyle.lightShade,left:"25px", justifyContent:"center"}}>
                 <FontAwesomeIcon className="icon-link" icon={faTrashAlt} onClick = {()=>{this.props.callbacks.deleteLink(this.props.index)}}/>
               </div>
             </div>}
@@ -222,7 +222,7 @@ class AdminLinkWrapper extends React.Component {
             {this.props.mode != "edit" && this.children}
 
             {this.props.mode == "edit" && 
-              <div className="flex-col">
+              <div className="col">
                 <ContentEditable
                   style={{color:this.props.webStyle.lightShade,marginTop:"10px"}}
                   innerRef={this.contentEditable}
@@ -235,16 +235,16 @@ class AdminLinkWrapper extends React.Component {
               </div>}
 
               {this.props.mode == "edit" && <div>
-              <div className={"flex-col floatOnTop"} style={{color:this.props.webStyle.lightShade,right:"25px", justifyContent:"center"}}>
+              <div className={"col floatOnTop"} style={{color:this.props.webStyle.lightShade,right:"25px", justifyContent:"center"}}>
                 <FontAwesomeIcon className="icon-link" icon={ faCheck} onClick = {this.editLink.bind(this)}/>
               </div>
             </div>}
 
             {this.props.mode == "add/move" && <div>
-              <div className={"flex-col floatOnTop "+buttonClass} style={{color:this.props.webStyle.lightShade,right:"0px", justifyContent:"center"}}>
+              <div className={"col floatOnTop "+buttonClass} style={{color:this.props.webStyle.lightShade,right:"0px", justifyContent:"center"}}>
                 <FontAwesomeIcon className="icon-link" icon={faAngleDoubleRight} onClick = {()=>{this.props.callbacks.moveLinkRight(this.props.index)}}/>
               </div>
-              <div className={"flex-col floatOnTop "+buttonClass} style={{color:this.props.webStyle.lightShade,right:"25px", justifyContent:"center"}}>
+              <div className={"col floatOnTop "+buttonClass} style={{color:this.props.webStyle.lightShade,right:"25px", justifyContent:"center"}}>
                 <FontAwesomeIcon className="icon-link" icon={faPlus} onClick = {()=>{this.props.callbacks.addLinkAtIndex(this.props.index+1)}}/>
               </div>
             </div>}
@@ -255,21 +255,21 @@ class AdminLinkWrapper extends React.Component {
   };
 }
 /* 
-<div className = {"flex-col floatOnTopRight"}>
+<div className = {"col floatOnTopRight"}>
                 <div style={{height:"100%",display:"flex",flexDirection:"column",justifyContent:"baseline",zIndex:999}}>
                     {/* {this.props.index != 0 && <button  className = {buttonClass} onClick = {this.openAddComponentLeft}>Add <FontAwesomeIcon   icon={faSortUp} /></button>} }
 
-                    <div className = {"flex-row"}>
+                    <div className = {"row"}>
                         <button  className = {buttonClass} onClick = {this.openAddComponentLeft}>Add <FontAwesomeIcon   icon={faSortUp} /></button>
                         {this.props.index != 0 && <button  className = {buttonClass} onClick = {()=>{this.state.callbacks.moveComponentUp(this.props.index)}}>Move <FontAwesomeIcon   icon={faSortUp} /></button>}
                     </div>
                     
-                    <div className = {"flex-row"}>
+                    <div className = {"row"}>
                     <button  className = {buttonClass} onClick = {()=>{this.state.callbacks.deleteComponent(this.props.index)}}>Delete</button >
                     <button  className = {buttonClass} onClick = {this.closeAddComponents}>X</button >
                     </div>
                     
-                    <div className = {"flex-row"}>
+                    <div className = {"row"}>
                         <button  className = {buttonClass} onClick = {this.openAddComponentBelow}>Add <FontAwesomeIcon   icon={faSortDown} /></button>
 
                         {this.props.index != this.props.componentCount - 1 && <button  className = {buttonClass} onClick = {()=>{this.state.callbacks.moveComponentDown(this.props.index)}}>Move <FontAwesomeIcon   icon={faSortDown} /></button>}

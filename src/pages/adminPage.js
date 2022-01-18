@@ -20,11 +20,11 @@ export default function AdminPage(props) {
 
           <Link to = "/" onClick = {props.viewAsNormalUserCallback}>View Site As Non-Admin</Link>
 
-          <div className={"flex-row"}>
-            <div className={"flex-col width-50"}>
+          <div className={"row"}>
+            <div className={"col width-50"}>
               <h3>IG Analytics</h3>
             </div>
-            <div className={"flex-col width-50"}>
+            <div className={"col width-50"}>
               <h3>Discovery Call Schedule</h3>
             </div>
 

@@ -13,6 +13,10 @@ import Footer from "./footer";
 import VideoFrame from "./videoFrame";
 import SlideShow from "./slideShow";
 import PictureFrame from "./pictureFrame";
+import QuickLink from "./quickLink";
+import Paragraph from "./paragraph";
+import ListComparisonTable from "./listComparisonTable";
+import PlanComparison from "./planComparison";
 
 
 export default class DynamicPage extends React.Component {
@@ -40,7 +44,11 @@ export default class DynamicPage extends React.Component {
             BlogPreview:BlogPreview,
             CaptionedPicture,CaptionedPicture,
             SlideShow:SlideShow,
-            PictureFrame:PictureFrame
+            PictureFrame:PictureFrame,
+            QuickLink:QuickLink,
+            Paragraph:Paragraph,
+            ListComparisonTable:ListComparisonTable,
+            PlanComparison:PlanComparison,
             // Gallery,
             // NewsletterSignup,
             // BlogFeedAppointments,
@@ -196,25 +204,26 @@ export default class DynamicPage extends React.Component {
            
         
             const Component = this.componentMapping[component.name];
-            let newComponent = <AdminComponentWrapper key ={component.id+"-admin"} index = {index} componentCount = {this.state.components.length} 
-                                                      callbacks = {callbacks} componentOptions = {this.props.componentOptions} adminProps = {this.adminProps} >
-                                        <Component webStyle = {this.props.webStyle} key={component.id} id = {component.id} routes = {this.props.routes} 
-                                                   index = {index} pageName = {this.props.pageName} adminProps = {this.adminProps}/>
-                                </AdminComponentWrapper>
+            // let newComponent = <AdminComponentWrapper key ={component.id+"-admin"} index = {index} componentCount = {this.state.components.length} 
+                                                    //   callbacks = {callbacks} componentOptions = {this.props.componentOptions} adminProps = {this.adminProps} >
+                                        let newComponent = <Component webStyle = {this.props.webStyle} key={component.id} id = {component.id} pages = {this.props.pages} pageCallbacks = {this.props.pageCallbacks} isMobile = {this.props.isMobile}
+                                                   index = {index} pageName = {this.props.pageName} adminProps = {this.adminProps} socialMedias = {this.props.socialMedias} socialMediaCallbacks = {this.props.socialMediaCallbacks}/>
+                                // </AdminComponentWrapper>
             pageComponents.push(newComponent)
         });
 
         // alert(JSON.stringify(pageComponents))
  
         return (
-            <div style={{backgroundColor:this.props.webStyle.lightShade}}>    
+            <div className="w-100" style={{backgroundColor:this.props.webStyle.lightShade}}>    
     
                 <WebsiteStyleEditor webStyle = {this.props.webStyle} updateWebStyle = {this.props.updateWebStyle} closeStyleEditor = {this.props.closeStyleEditor} showStyleEditor = {this.props.showStyleEditor}
-                                    showStyleEditor = {this.props.showStyleEditor} minimizeStyleEditor = {this.minimizeStyleEditor} expandStyleEditor = {this.expandStyleEditor}/>
-                <div id = "outerSection" style={{backgroundColor:this.props.webStyle.lightAccent,width:`${this.props.webStyle.centerWidth}%`,margin:"auto", paddingBottom: "50px"}}>
-                                {/* <div  > */}
+                                    showStyleEditor = {this.props.showStyleEditor} minimizeStyleEditor = {this.minimizeStyleEditor} expandStyleEditor = {this.expandStyleEditor} 
+                                    socialMedias = {this.props.socialMedias} socialMediaCallbacks = {this.props.socialMediaCallbacks} pages = {this.props.pages} pageCallbacks = {this.props.pageCallbacks}/>
+                <div id = "outerSection" className="container ">
+                    <div id = "innerSection" className="col justify-items-baseline p-5 boxShadow h-100" style={{backgroundColor:this.props.webStyle.lightAccent}}>
 
-                    <div id = "mainSection" style={{width:`${this.props.webStyle.secondCenterWidth}%`,margin:"auto"}}> {/* Includes everything inside the margin */}
+                    {/* <div id = "mainSection" style={{width:this.props.isMobile?"100%":`${this.props.webStyle.secondCenterWidth}%`,margin:"auto"}}> Includes everything inside the margin */}
                         {pageComponents}
                         {/* {this.componentMapping.Navbar} */}
                     </div>
@@ -278,6 +287,7 @@ class AdminComponentWrapper extends React.Component {
 
         let buttonClass = this.state.areButtonsVisible ? "adminbuttons" :"hidden"
  
+        // buttonClass = "hidden"
         let options = this.state.componentOptions.map((option) => (
             <button key ={option} onClick = {()=>{this.addNewComponent(option)}}>{option}</button>
             ))
@@ -288,27 +298,27 @@ class AdminComponentWrapper extends React.Component {
 
     return ( 
         
-        <div className = {"flex-col"} onMouseEnter={() => this.setButtonsVisibility(true)} onMouseLeave={() => {this.setButtonsVisibility(false);this.closeAddComponents()}}>
+        <div className = {"col"} onMouseEnter={() => this.setButtonsVisibility(true)} onMouseLeave={() => {this.setButtonsVisibility(false);this.closeAddComponents()}}>
             {/* Above component */}
-            {this.state.areAboveOptionsVisible && <div className = {"flex-row component-options"}>{options}</div> }
+            {this.state.areAboveOptionsVisible && <div className = {"row component-options"}>{options}</div> }
                 {/* To the right of component */}
-                <div className = {"flex-row"} style={{position:"relative"}}>
+                <div className = {"row w-100"} style={{position:"relative"}}>
                     {this.children}
-                    <div className = {"flex-col floatOnTopRight"}>
+                    <div className = {"col floatOnTopRight hidden"}>
                         <div style={{height:"100%",display:"flex",flexDirection:"column",justifyContent:"baseline",zIndex:999}}>
                             {/* {this.props.index != 0 && <button  className = {buttonClass} onClick = {this.openAddComponentAbove}>Add <FontAwesomeIcon   icon={faSortUp} /></button>} */}
 
-                            <div className = {"flex-row"}>
+                            <div className = {"row"}>
                                 <button  className = {buttonClass} onClick = {this.openAddComponentAbove}>Add <FontAwesomeIcon   icon={faSortUp} /></button>
                                 {this.props.index != 0 && <button  className = {buttonClass} onClick = {()=>{this.state.callbacks.moveComponentUp(this.props.index)}}>Move <FontAwesomeIcon   icon={faSortUp} /></button>}
                             </div>
                             
-                            <div className = {"flex-row"}>
+                            <div className = {"row"}>
                             <button  className = {buttonClass} onClick = {()=>{this.state.callbacks.deleteComponent(this.props.index)}}>Delete</button >
                             <button  className = {buttonClass} onClick = {this.closeAddComponents}>X</button >
                             </div>
                             
-                            <div className = {"flex-row"}>
+                            <div className = {"row"}>
                                 <button  className = {buttonClass} onClick = {this.openAddComponentBelow}>Add <FontAwesomeIcon   icon={faSortDown} /></button>
 
                                 {this.props.index != this.props.componentCount - 1 && <button  className = {buttonClass} onClick = {()=>{this.state.callbacks.moveComponentDown(this.props.index)}}>Move <FontAwesomeIcon   icon={faSortDown} /></button>}
@@ -317,7 +327,7 @@ class AdminComponentWrapper extends React.Component {
                     </div>
             </div>
             {/* Below component */}
-            {this.state.areBelowOptionsVisible && <div className = {"flex-row component-options"}>{options}</div>}
+            {this.state.areBelowOptionsVisible && <div className = {"row component-options"}>{options}</div>}
         
           </div>
     )

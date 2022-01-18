@@ -40,7 +40,7 @@ export default function VideoFrame(props){
     
 
     return(
-        <div className="flex-row" style = {{marginBottom:"40px"}} onMouseEnter={()=>{setButtonsVisible(true)}} onMouseLeave={()=>{setButtonsVisible(false)}}>
+        <div className="row" style = {{marginBottom:"40px"}} onMouseEnter={()=>{setButtonsVisible(true)}} onMouseLeave={()=>{setButtonsVisible(false)}}>
             <div  style = {{ position: "relative", margin:"auto", marginBottom:"20px",marginTop:"20px",minHeight:"100px",minWidth:"100px"}}  > 
             {videoSource ? 
                 <div className="video-responsive boxShadow">
@@ -62,12 +62,12 @@ export default function VideoFrame(props){
                 <div style={{ position: "absolute",top: "0", left: "0",display:"flex",flexDirection:"row"}}>
                     <div style={{flexDirection:"row",justifyContent:'center',width:"100%",marginBottom:"10px",alignSelf:"flex-end"}}> 
                         {!videoSource ?
-                            <div className="flex-row">
+                            <div className="row">
                                 <input type="text" placeholder="Link Goes Here" name="myVideo" value={linkInput} onChange={(e)=>{setLinkInput(e.target.value)}}/>
                                 <input type="button" value={"Add Video"} onClick={addVideo}/>
                             </div>
                             :
-                            <div className="flex-row">
+                            <div className="row">
                                 <input type="text" placeholder="Link Goes Here" name="myVideo" value={linkInput} onChange={(e)=>{setLinkInput(e.target.value)}}/>
                                 <input type="button" value={"Change Video"} onClick={addVideo}/>
                             </div>
